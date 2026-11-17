@@ -174,6 +174,8 @@
   .field textarea{resize:vertical;min-height:64px;}
   .field input::placeholder,.field textarea::placeholder{color:#8d8a86;}
   .field input:focus,.field textarea:focus{outline:0;border-bottom-color:var(--black);box-shadow:0 2px 0 var(--black);}
+  .thanks{font-size:1.2rem;line-height:1.5;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding:22px 0;}
+  #rmForm{width:100%;}
   .sign{font-weight:600;font-size:1.25rem;line-height:1.4;padding-top:6px;}
 
   /* footer */
@@ -397,11 +399,8 @@
     </figure>
     <div class="form">
       <h2 class="display">שרית, מה את אומרת על הבית שלנו?</h2>
-      <div class="field"><label for="fName">שם</label><input id="fName" type="text" autocomplete="name" placeholder="איך קוראים לכם?"></div>
-      <div class="field"><label for="fPhone">טלפון</label><input id="fPhone" type="tel" autocomplete="tel" placeholder="050-0000000" dir="ltr" style="text-align:right"></div>
-      <div class="field"><label for="fTopic">על מה תרצו להתייעץ?</label><input id="fTopic" type="text" placeholder="למשל: תאורה בסלון, צבע לקירות"></div>
-      <div class="field"><label for="fNote">קצת על הבית (לא חובה)</label><textarea id="fNote" placeholder="למשל: בית פרטי, אנחנו לפני שיפוץ"></textarea></div>
-      <a class="btn btn-full" id="waBtn" href="#" target="_blank" rel="noopener">לשלוח לשרית בוואטסאפ <span class="arr">←</span></a>
+      <div id="rmForm"><script type='text/javascript' src='https://form2.ravpage.co.il/ab181ecccbd6fb2e4aa3f08abfc451a56AFC5C7B' charset='UTF-8'></script></div>
+      <div id="thanks" class="thanks" hidden><strong>תודה! קיבלתי את הפרטים.</strong><br>אחזור אליכם בהקדם לתאם פגישה.</div>
       <p class="sign">אשמח להכיר ולשמוע את הסיפור שלכם.<br>שרית</p>
     </div>
   </div>
@@ -428,18 +427,10 @@
 
 <script>
 (function(){
-  var ids = ['fName','fPhone','fTopic','fNote'];
-  function update(){
-    var v = function(i){ return document.getElementById(i).value.trim(); };
-    var lines = ['היי שרית, אשמח לקבוע פגישת "שרית, מה את אומרת?".'];
-    if(v('fTopic')) lines.push('על מה נרצה להתייעץ: ' + v('fTopic'));
-    if(v('fName')) lines.push('שם: ' + v('fName'));
-    if(v('fPhone')) lines.push('טלפון: ' + v('fPhone'));
-    if(v('fNote')) lines.push('על הבית: ' + v('fNote'));
-    document.getElementById('waBtn').href = 'https://wa.me/972545964326?text=' + encodeURIComponent(lines.join('\n'));
+  if(/[?&]thanks=1/.test(location.search)){
+    document.getElementById('rmForm').hidden = true;
+    document.getElementById('thanks').hidden = false;
   }
-  ids.forEach(function(i){ document.getElementById(i).addEventListener('input', update); });
-  update();
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
